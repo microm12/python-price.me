@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from src.common.database import Database
 
 app = Flask(__name__)
@@ -8,6 +8,7 @@ app.secret_key = "123"
 
 @app.before_first_request
 def init_db():
+    session['email'] = None
     Database.initialize()
 
 
