@@ -8,7 +8,6 @@ app.secret_key = "123"
 
 @app.before_first_request
 def init_db():
-    session['email'] = None
     Database.initialize()
 
 
