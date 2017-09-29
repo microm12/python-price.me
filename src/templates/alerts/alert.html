@@ -2,7 +2,11 @@
 {% block content %}
 <div class="page-header">
     <h1>Alert
-        <small>for '{{alert.item.name}}'</small>
+        {% if alert.active %}
+            <small>for '{{alert.item.name}}'</small>
+        {% else %}
+            <small>for '{{alert.item.name}}' (Deactivated)</small>
+        {% endif %}
     </h1>
 </div>
 <p>Last price found was <strong>{{ alert.item.price }}</strong></p>
@@ -13,25 +17,24 @@
             <a class="btn btn-primary" href="{{ url_for('alerts.check_alert_price', alert_id=alert._id) }}"
                role="button">Check Item Price Now</a>
             <a class="btn btn-default" href="{{ alert.item.url }}" role="button">Visit Store</a>
-            {% if not alert.active %}
-            <a class="btn btn-success" href="{{ url_for('alerts.activate_alert', alert_id = alert._id) }}"
-               role="button">Activate Alert</a>
-            {% endif %}
             <div class="btn-group" role="group">
+                <a class="btn btn-warning" href="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}" role="button">Edit
+                    Alert</a>
                 <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                    Edit Alert
                     <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}">Edit Alert Price</a></li>
-                      {% if alert.active %}
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ url_for('alerts.deactivate_alert', alert_id = alert._id) }}">Deactivate Alert</a></li>
-                      {% else %}
-                        <li role="separator" class="divider"></li>
+                    {% if alert.active %}
+                        <li><a href="{{ url_for('alerts.deactivate_alert', alert_id = alert._id) }}">Deactivate Alert</a>
+                        </li>
+                        <li class="disabled"><a href="#">Delete Alert</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('alerts.activate_alert', alert_id = alert._id) }}">Activate Alert</a></li>
                         <li><a href="{{ url_for('alerts.delete_alert', alert_id= alert._id) }}">Delete Alert</a></li>
-                      {% endif %}
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
