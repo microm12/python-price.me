@@ -9,6 +9,7 @@ user_blueprint = Blueprint('users', __name__)
 
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
+@user_decorators.already_logged_in
 def login_user():
     if request.method == 'POST':
         email = request.form['email']
@@ -25,6 +26,7 @@ def login_user():
 
 
 @user_blueprint.route('/register', methods=['GET', 'POST'])
+@user_decorators.already_logged_in
 def register_user():
     if request.method == 'POST':
         email = request.form['email']
@@ -52,9 +54,3 @@ def user_alerts():
 def logout_user():
     session['email'] = None
     return redirect(url_for('home'))
-
-
-@user_blueprint.route('/check_alerts/<string:user_id>')
-def check_user_alerts(user_id):
-    pass
-

@@ -23,4 +23,10 @@ def requires_admin(func):
     return decorated_function
 
 
-
+def already_logged_in(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if 'email' in session.keys() and session['email'] is not None :
+            return "You are already logged in."
+        return func(*args, **kwargs)  #func(...) args: func(5,6), kwargs: func(x=5, y=6)
+    return decorated_function
