@@ -29,9 +29,11 @@
                     {% if alert.active %}
                         <li><a href="{{ url_for('alerts.deactivate_alert', alert_id = alert._id) }}">Deactivate Alert</a>
                         </li>
+                        <li role="separator" class="divider"></li>
                         <li class="disabled"><a href="#">Delete Alert</a></li>
                     {% else %}
                         <li><a href="{{ url_for('alerts.activate_alert', alert_id = alert._id) }}">Activate Alert</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="{{ url_for('alerts.delete_alert', alert_id= alert._id) }}">Delete Alert</a></li>
                         </li>
                     {% endif %}
